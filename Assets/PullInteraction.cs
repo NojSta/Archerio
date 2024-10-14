@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class PullInteraction : XRBaseInteractable
 {
-    //public static event Action<float> PullActionReleased;
+    public static event Action<float> PullActionReleased;
 
     public Transform start, end;
     public GameObject notch;
@@ -27,7 +28,7 @@ public class PullInteraction : XRBaseInteractable
     }
     public void Release()
     {
-        //PullActionReleased?.Invoke(pullAmount);
+        PullActionReleased?.Invoke(pullAmount);
         pullingInteractor = null;
         pullAmount = 0f;
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, 0f);
