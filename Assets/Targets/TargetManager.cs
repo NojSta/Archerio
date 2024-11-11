@@ -1,8 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TargetManager : MonoBehaviour
 {
     private int _targetsRemaining;
+
+    public GameObject targetPrefab; // Prefab for targets
+    public List<Transform> spawnPoints; // List of positions to spawn targets
 
     private void OnEnable()
     {
@@ -16,7 +20,7 @@ public class TargetManager : MonoBehaviour
 
     private void Start()
     {
-        _targetsRemaining = FindObjectsOfType<Target>().Length;
+        SpawnTargets();
     }
 
     private void TargetHit(Target target)
@@ -24,13 +28,21 @@ public class TargetManager : MonoBehaviour
         _targetsRemaining--;
         if (_targetsRemaining <= 0)
         {
-            // Advance to next level
-            LoadNextLevel();
+            // All targets are hit; respawn targets
+            SpawnTargets();
         }
     }
 
-    private void LoadNextLevel()
+    private void SpawnTargets()
     {
-        // Implement level-loading logic, e.g., SceneManager.LoadScene("NextLevelScene");
+        // Clear previous targets (if not already handled elsewhere)
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            // Instantiate new targets at each spawn point
+            Instantiate(targetPrefab, spawnPoint.position, spawnPoint.rotation);
+        }
+
+        // Update the counter for remaining targets
+        _targetsRemaining = spawnPoints.Count;
     }
 }
