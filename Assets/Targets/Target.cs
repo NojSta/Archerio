@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections; // This is necessary for IEnumerator
 
 public class Target : MonoBehaviour
 {
@@ -7,20 +6,37 @@ public class Target : MonoBehaviour
     public static event TargetHit OnTargetHit;
 
     [SerializeField]
-    private float disappearDelay = 2f; // Time in seconds before the target disappears
+    private Color hitColor = Color.red;
 
-    private void OnCollisionEnter(Collision collision)
+    private Renderer targetRenderer;
+    private bool isHit = false; // Track whether this target has been hit already
+
+    private void Start()
     {
-        if (collision.gameObject.CompareTag("Arrow"))
+        targetRenderer = GetComponent<Renderer>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Arrow") && !isHit)
         {
-            OnTargetHit?.Invoke(this);
-            StartCoroutine(DelayedDisappear()); // Use coroutine for delay
+            ChangeColorToHitColor();
+            OnTargetHit?.Invoke(this); // Notify the GameManager that this target was hit
         }
     }
 
-    private IEnumerator DelayedDisappear()
+    private void ChangeColorToHitColor()
     {
-        yield return new WaitForSeconds(disappearDelay);
-        gameObject.SetActive(false);
+        targetRenderer.material.color = hitColor;
+    }
+
+    public bool IsHit()
+    {
+        return isHit;
+    }
+
+    public void SetHitStatus(bool status)
+    {
+        isHit = status;
     }
 }
