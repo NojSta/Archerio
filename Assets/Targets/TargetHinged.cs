@@ -3,7 +3,7 @@ using UnityEngine;
 public class TargetHinged : MonoBehaviour
 {
     public delegate void TargetHit(TargetHinged target);
-    public static event TargetHingedHit OnTargetHingedHit;
+    public static event TargetHit OnTargetHit;
 
     private bool isRotating = false;
     private float rotationDuration = 1.0f; // Duration of rotation
