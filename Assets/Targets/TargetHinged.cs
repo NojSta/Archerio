@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class TargetHinged : MonoBehaviour
 {
-public delegate void TargetHit(TargetHinged target);
-    public static event TargetHit OnTargetHit;
+    public delegate void TargetHit(TargetHinged target);
+    public static event TargetHingedHit OnTargetHingedHit;
 
-    private bool isHit = false; // Track whether this target has been hit already
-    private bool isRotating = false; // Track whether the target is currently rotating
-    private float rotationDuration = 1.0f; // Duration to complete the rotation
+    private bool isRotating = false;
+    private float rotationDuration = 1.0f; // Duration of rotation
     private float rotationStartTime;
+    private bool isHit = false; // Track whether this target has been hit already
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Arrow") && !isHit)
         {
             StartRotation();
-            OnTargetHit?.Invoke(this); // Notify the GameManager that this target was hit
+            isHit = true; // Indicate that target has been hit, preventing multiple triggers
+            OnTargetHit?.Invoke(this); // Notify that this target was hit
         }
     }
 
@@ -39,7 +40,6 @@ public delegate void TargetHit(TargetHinged target);
                 // Ensure exact final rotation and stop rotating
                 RotateTarget(180f);
                 isRotating = false;
-                isHit = true;
             }
         }
     }
@@ -52,19 +52,7 @@ public delegate void TargetHit(TargetHinged target);
 
     private void RotateTarget(float rotationAngle)
     {
-        // Assuming the pivot point is at (0, -0.5, 0) relative to the target's local position to simulate rotation around the bottom
-        Vector3 pivotPoint = new Vector3(0f, -0.5f, 0f);
-        Quaternion rotation = Quaternion.Euler(rotationAngle, 0, 0);
-        transform.SetPositionAndRotation(pivotPoint + rotation * (transform.position - pivotPoint), rotation * transform.rotation);
-    }
-
-    public bool IsHit()
-    {
-        return isHit;
-    }
-
-    public void SetHitStatus(bool status)
-    {
-        isHit = status;
+        // Rotate the parent (pivot) GameObject
+        transform.rotation = Quaternion.Euler(rotationAngle, 0, 0);
     }
 }
