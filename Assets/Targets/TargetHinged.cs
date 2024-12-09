@@ -17,6 +17,9 @@ public class TargetHinged : MonoBehaviour
     {
         if (other.CompareTag("Arrow") && !isHit)
         {
+            // Make the arrow a child of the target to ensure it rotates with it
+            other.transform.SetParent(transform);
+
             StartRotation();
             isHit = true; // Indicate that target has been hit, preventing multiple triggers
             OnTargetHit?.Invoke(this); // Notify that this target was hit
