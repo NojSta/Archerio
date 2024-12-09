@@ -52,6 +52,8 @@ public class HingeSwing : MonoBehaviour
             lineRenderer.startWidth = 0.01f;  // Start width of the line
             lineRenderer.endWidth = 0.01f;    // End width of the line
         }
+
+        StopSwingAndDrop();
     }
 
     void Update()
@@ -72,6 +74,26 @@ public class HingeSwing : MonoBehaviour
         {
             lineRenderer.SetPosition(0, hingeAnchor.position);  // Set anchor point
             lineRenderer.SetPosition(1, movingPart.position);   // Set moving part position
+        }
+    }
+
+    public void StopSwingAndDrop()
+    {
+        // Disable the hinge motor and spring
+        hingeJoint.useMotor = false;
+        hingeJoint.useSpring = false;
+
+        // Remove the LineRenderer line
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = false;  // Alternatively, you can destroy it: Destroy(lineRenderer.gameObject);
+        }
+
+        // Enable gravity on the object
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.useGravity = true;
         }
     }
 }
