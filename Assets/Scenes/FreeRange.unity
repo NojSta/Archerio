@@ -1300,11 +1300,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436748424232721127, guid: 1170bc25cceb80142adf44b930a6582a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 77.48
+      value: 77.479
       objectReference: {fileID: 0}
     - target: {fileID: 436748424232721127, guid: 1170bc25cceb80142adf44b930a6582a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.87
+      value: 3.894
       objectReference: {fileID: 0}
     - target: {fileID: 436748424232721127, guid: 1170bc25cceb80142adf44b930a6582a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4442,9 +4442,10 @@ MonoBehaviour:
   arrowPrefab: {fileID: 1769337597633466025, guid: 54ba44d4ecd83324991be29cf49b127d, type: 3}
   notches:
   - {fileID: 135330682}
+  - {fileID: 316555056}
   quiverPosition: {fileID: 807139653}
   grabRange: 0.7
-  putArrowRange: 0.2
+  putArrowRange: 0.4
 --- !u!4 &2040421054
 Transform:
   m_ObjectHideFlags: 0

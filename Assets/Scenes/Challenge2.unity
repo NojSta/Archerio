@@ -3655,7 +3655,7 @@ AudioSource:
 --- !u!1 &540951708
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3687083812784747812, guid: 638ebb431c140b447ae9a6412d577aff, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
@@ -9529,7 +9529,7 @@ MonoBehaviour:
   - {fileID: 531785443}
   quiverPosition: {fileID: 807139653}
   grabRange: 0.7
-  putArrowRange: 0.2
+  putArrowRange: 0.4
 --- !u!4 &2040421054
 Transform:
   m_ObjectHideFlags: 0

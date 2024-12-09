@@ -10250,7 +10250,7 @@ MonoBehaviour:
   - {fileID: 1678996732}
   quiverPosition: {fileID: 807139653}
   grabRange: 0.7
-  putArrowRange: 0.2
+  putArrowRange: 0.4
 --- !u!4 &2040421054
 Transform:
   m_ObjectHideFlags: 0
