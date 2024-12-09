@@ -104,4 +104,9 @@ public class Arrow : MonoBehaviour
         _rigidBody.useGravity = usePhysics;
         _rigidBody.isKinematic = !usePhysics;
     }
+
+    public bool IsOnFire()
+    {
+        return _isOnFire;
+    }
 }

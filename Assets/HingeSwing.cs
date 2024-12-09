@@ -52,8 +52,6 @@ public class HingeSwing : MonoBehaviour
             lineRenderer.startWidth = 0.01f;  // Start width of the line
             lineRenderer.endWidth = 0.01f;    // End width of the line
         }
-
-        Invoke("StopSwingAndDrop", 3f);
     }
 
     void Update()
