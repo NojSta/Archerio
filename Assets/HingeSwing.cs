@@ -53,28 +53,33 @@ public class HingeSwing : MonoBehaviour
             lineRenderer.endWidth = 0.01f;    // End width of the line
         }
 
-        StopSwingAndDrop();
+        Invoke("StopSwingAndDrop", 3f);
     }
 
     void Update()
     {
         // Alternate the motor target velocity to create the oscillating effect
-        JointMotor motor = hingeJoint.motor;
-
-        // Reverse the direction of the motor when it hits the limit
-        if (hingeJoint.angle >= limitMax || hingeJoint.angle <= limitMin)
+        if (hingeJoint != null)
         {
-            isReversing = !isReversing;
-            motor.targetVelocity = isReversing ? -motorSpeed : motorSpeed;
-            hingeJoint.motor = motor;
-        }
+            JointMotor motor = hingeJoint.motor;
 
-        // Update LineRenderer positions
-        if (lineRenderer != null)
-        {
-            lineRenderer.SetPosition(0, hingeAnchor.position);  // Set anchor point
-            lineRenderer.SetPosition(1, movingPart.position);   // Set moving part position
+            // Reverse the direction of the motor when it hits the limit
+            if (hingeJoint.angle >= limitMax || hingeJoint.angle <= limitMin)
+            {
+                isReversing = !isReversing;
+                motor.targetVelocity = isReversing ? -motorSpeed : motorSpeed;
+                hingeJoint.motor = motor;
+            }
+
+            // Update LineRenderer positions
+            if (lineRenderer != null)
+            {
+                lineRenderer.SetPosition(0, hingeAnchor.position);  // Set anchor point
+                lineRenderer.SetPosition(1, movingPart.position);   // Set moving part position
+            }
         }
+        
+        
     }
 
     public void StopSwingAndDrop()
@@ -83,17 +88,30 @@ public class HingeSwing : MonoBehaviour
         hingeJoint.useMotor = false;
         hingeJoint.useSpring = false;
 
-        // Remove the LineRenderer line
+        // Disable the LineRenderer without destroying the object
         if (lineRenderer != null)
         {
-            lineRenderer.enabled = false;  // Alternatively, you can destroy it: Destroy(lineRenderer.gameObject);
+            lineRenderer.enabled = false;  // Just hide the line
         }
 
-        // Enable gravity on the object
+        // Get the Rigidbody component
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
+            // Enable gravity and allow the object to fall
             rb.useGravity = true;
+
+            // Remove any constraints
+            rb.constraints = RigidbodyConstraints.None;
+
+            // Stop all motion (both angular and linear)
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            
         }
+
+        // Optionally, destroy the hinge joint to completely stop any remaining forces
+        Destroy(hingeJoint);
     }
 }
