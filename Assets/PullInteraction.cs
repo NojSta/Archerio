@@ -35,6 +35,8 @@ public class PullInteraction : XRBaseInteractable
     public void SetPullIteractor(SelectEnterEventArgs args)
     {
         pullingInteractor = args.interactorObject;
+
+        // Play the bow drawn sound
         PlaySound(bowDrawnSound);
     }
 
@@ -45,6 +47,9 @@ public class PullInteraction : XRBaseInteractable
         pullAmount = 0f;
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, 0f);
         UpdateString();
+
+        // Play the bow shot sound
+        audioSource.Stop();
         PlaySound(bowShotSound);
     }
 
