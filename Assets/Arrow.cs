@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    public float speed = 10f;
     public Transform tip;
 
     private bool _inAir = false;
@@ -30,7 +29,7 @@ public class Arrow : MonoBehaviour
         _inAir = true;
         SetPhysics(true);
 
-        Vector3 force = transform.forward * value * speed;
+        Vector3 force = transform.forward * value;
         _rigidBody.AddForce(force, ForceMode.Impulse);
         StartCoroutine(RotateWithVelocity());
         _lastPosition = tip.position;
