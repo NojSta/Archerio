@@ -10,6 +10,15 @@ public class TargetHinged : MonoBehaviour
     private float rotationStartTime;
     private bool isHit = false; // Track whether this target has been hit already
 
+    private Quaternion startRotation;
+    private Quaternion endRotation;
+
+    private void Start()
+    {
+        // Start rotating at game start
+        StartRotation();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Arrow") && !isHit)
@@ -31,14 +40,13 @@ public class TargetHinged : MonoBehaviour
 
             if (fractionOfDuration < 1.0f)
             {
-                // Interpolate the rotation from 90 to 180 degrees
-                float currentRotation = Mathf.Lerp(90f, 180f, fractionOfDuration);
-                RotateTarget(currentRotation);
+                // Interpolate the rotation from start to end
+                transform.rotation = Quaternion.Slerp(startRotation, endRotation, fractionOfDuration);
             }
             else
             {
                 // Ensure exact final rotation and stop rotating
-                RotateTarget(180f);
+                transform.rotation = endRotation;
                 isRotating = false;
             }
         }
@@ -48,11 +56,9 @@ public class TargetHinged : MonoBehaviour
     {
         isRotating = true;
         rotationStartTime = Time.time;
-    }
 
-    private void RotateTarget(float rotationAngle)
-    {
-        // Rotate the parent (pivot) GameObject
-        transform.rotation = Quaternion.Euler(rotationAngle, 0, 0);
+        startRotation = transform.rotation;
+        Vector3 targetEulerAngles = new Vector3(transform.eulerAngles.x + 90f, transform.eulerAngles.y, transform.eulerAngles.z);
+        endRotation = Quaternion.Euler(targetEulerAngles);
     }
 }
