@@ -13,12 +13,6 @@ public class TargetHinged : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion endRotation;
 
-    private void Start()
-    {
-        // Start rotating at game start
-        StartRotation();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Arrow") && !isHit)
