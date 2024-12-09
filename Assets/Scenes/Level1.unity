@@ -1226,6 +1226,8 @@ MonoBehaviour:
   end: {fileID: 360216000}
   notch: {fileID: 1555098187}
   speed: 10
+  bowDrawnSound: {fileID: 8300000, guid: 63578769267caf44a8af0b9dad5feddf, type: 3}
+  bowShotSound: {fileID: 8300000, guid: 4b4f8a94563d0684a91276138744ede4, type: 3}
 --- !u!65 &144608733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5230,6 +5232,8 @@ MonoBehaviour:
   end: {fileID: 1598813526}
   notch: {fileID: 2029938838}
   speed: 20
+  bowDrawnSound: {fileID: 8300000, guid: 63578769267caf44a8af0b9dad5feddf, type: 3}
+  bowShotSound: {fileID: 8300000, guid: 4b4f8a94563d0684a91276138744ede4, type: 3}
 --- !u!65 &662372624 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 5860944015102873749, guid: 1170bc25cceb80142adf44b930a6582a, type: 3}
