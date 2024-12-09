@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class ArrowSpawner : MonoBehaviour
 {
     public GameObject arrowPrefab;
-    public GameObject notch;
+    public GameObject[] notches; // Array to hold multiple notches
     public Transform quiverPosition;      // Set a position behind the player's back in the Inspector
     public float grabRange = 0.2f;        // The range to detect the hand reaching behind the back
     public float putArrowRange = 0.2f;
@@ -36,12 +36,19 @@ public class ArrowSpawner : MonoBehaviour
             SpawnArrowInHand();
         }
 
-        // Check if currentInteractor and notch are valid, and if arrow is close enough to the notch
-        // Check if the arrow in hand is close enough to the notch to attach
-        if (arrowInHand && currentInteractor != null &&
-            Vector3.Distance(currentInteractor.transform.position, notch.transform.position) < putArrowRange)
+        // Check if currentInteractor and notches are valid, and if arrow is close enough to any notch
+        if (arrowInHand && currentInteractor != null)
         {
-            AttachArrowToNotch();
+            GameObject closestNotch = GetClosestNotch();
+
+            if (closestNotch != null)
+            {
+                // If the closest notch is within range, attach the arrow
+                if (Vector3.Distance(currentInteractor.transform.position, closestNotch.transform.position) < putArrowRange)
+                {
+                    AttachArrowToNotch(closestNotch);
+                }
+            }
         }
 
         // If the bow is no longer held and there's an unnotched arrow, destroy it
@@ -51,7 +58,6 @@ public class ArrowSpawner : MonoBehaviour
             NotchEmpty(1f);
         }
     }
-
 
     private bool TryGetHandNearQuiver(out XRBaseInteractor interactor)
     {
@@ -77,15 +83,31 @@ public class ArrowSpawner : MonoBehaviour
         arrowInHand = true;
     }
 
-    private void AttachArrowToNotch()
+    private GameObject GetClosestNotch()
+    {
+        GameObject closestNotch = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (GameObject notch in notches)
+        {
+            float distance = Vector3.Distance(currentInteractor.transform.position, notch.transform.position);
+            if (distance < closestDistance && distance < putArrowRange)
+            {
+                closestDistance = distance;
+                closestNotch = notch;
+            }
+        }
+
+        return closestNotch;
+    }
+
+    private void AttachArrowToNotch(GameObject notch)
     {
         currentArrow.transform.SetParent(notch.transform, worldPositionStays: false);
         currentArrow.transform.localPosition = Vector3.zero;
         currentArrow.transform.localRotation = Quaternion.identity;
         arrowInHand = false;
     }
-
-
 
     private void NotchEmpty(float value)
     {

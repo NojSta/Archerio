@@ -14,8 +14,11 @@ public class PullInteraction : XRBaseInteractable
     public Transform start, end;
     public GameObject notch;
     public float pullAmount { get; private set; } = 0.0f;
+    public float speed = 10f;
     private LineRenderer _lineRenderer;
     private IXRSelectInteractor pullingInteractor = null;
+
+    public float getSpeed() { return speed; }
 
     protected override void Awake()
     {
@@ -28,7 +31,7 @@ public class PullInteraction : XRBaseInteractable
     }
     public void Release()
     {
-        PullActionReleased?.Invoke(pullAmount);
+        PullActionReleased?.Invoke(pullAmount * speed);
         pullingInteractor = null;
         pullAmount = 0f;
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, 0f);
@@ -63,6 +66,7 @@ public class PullInteraction : XRBaseInteractable
     private void UpdateString()
     {
         Vector3 linePosition = Vector3.forward * Mathf.Lerp(start.transform.localPosition.z, end.transform.localPosition.z, pullAmount);
+        print("UPDEIT");
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, linePosition.z + 0.2f);
         _lineRenderer.SetPosition(1, linePosition);
     }

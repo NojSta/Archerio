@@ -1224,6 +1224,7 @@ MonoBehaviour:
   start: {fileID: 852334401}
   end: {fileID: 360216000}
   notch: {fileID: 1555098187}
+  speed: 10
 --- !u!65 &144608733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1390,7 +1391,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 1769337597633466025, guid: 54ba44d4ecd83324991be29cf49b127d, type: 3}
-  notch: {fileID: 1555098187}
+  notches:
+  - {fileID: 1555098187}
   quiverPosition: {fileID: 1811019443}
   grabRange: 0.5
   putArrowRange: 0.2
